@@ -1,28 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <div className="bg-blue-600 text-white p-4 rounded">
+    <div className="min-h-screen bg-gray-100">
+      <Navbar />
+      <main className="p-6 max-w-3xl mx-auto">
+        <div className="bg-blue-600 text-white p-4 rounded shadow text-lg">
           Hello Routra 👋
         </div>
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </main>
     </div>
   );
 }
