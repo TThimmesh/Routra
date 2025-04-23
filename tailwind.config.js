@@ -1,12 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}", // ← this tells Tailwind to scan all your components
+    "./src/**/*.{js,ts,jsx,tsx}", // Scan all components for classes
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        routraPurple: '#6D28D9', // soft purple
+        routraGray: '#1F1F1F',   // dark base
+        routraCard: '#2A2A2A',   // card background
+      },
+    },
   },
-  plugins: [],
+  plugins: [], // ← required even if empty
 }
-
-
