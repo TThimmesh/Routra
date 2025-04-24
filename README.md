@@ -61,4 +61,5 @@ Routra supports a smooth light ↔ dark transition. Your theme preference is sav
 ### 🎨 Luke Hutchison  
 **Role:** Lead Graphic Artist  
 🎨 Responsible for brand identity, UI styling, logo design, and visual direction.
+
 📬 [LinkedIn](https://www.linkedin.com/in/luke-hutchison-737237310/)
