@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        bebas: ['"Bebas Neue"', 'sans-serif'],
+      },
       keyframes: {
         fadeIn: {
           '0%': { opacity: 0, transform: 'translateY(10px)' },
@@ -30,5 +33,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar'),],
 };

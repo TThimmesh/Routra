@@ -18,7 +18,7 @@ const HeroInput = () => {
       </div>
 
       {/* Headline */}
-      <h2 className="text-3xl font-semibold tracking-tight animate-fadeIn delay-100">
+      <h2 className="text-3xl font-bebas tracking-wide animate-fadeIn delay-100">
         How do you want to change the world?
       </h2>
 
@@ -28,11 +28,11 @@ const HeroInput = () => {
           type="text"
           value={idea}
           onChange={(e) => setIdea(e.target.value)}
-          className="w-full bg-transparent text-routraText placeholder-gray-500 p-3 rounded-lg border border-routraBorder focus:outline-none"
+          className="w-full bg-transparent font-bebas tracking-wide text-routraText placeholder-gray-500 p-3 rounded-lg border border-routraBorder focus:outline-none"
           placeholder="An AI tutor for kids with ADHD..."
         />
         <button
-          className="bg-routraAccent hover:bg-routraAccentHover text-white font-medium px-6 py-3 rounded-lg transition transform hover:scale-105 hover:shadow-lg hover:shadow-routraAccent/40"
+          className="bg-routraAccent hover:bg-routraAccentHover text-white font-bebas tracking-wide px-6 py-3 rounded-lg transition transform hover:scale-105 hover:shadow-lg hover:shadow-routraAccent/40"
         >
           Generate
         </button>
