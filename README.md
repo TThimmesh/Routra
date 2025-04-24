@@ -37,8 +37,6 @@ Routra supports a smooth light ↔ dark transition. Your theme preference is sav
 |------------|-----------|
 | ![Light](screenshots/light.png) | ![Dark](screenshots/dark.png) |
 
-> Add your screenshots to the `screenshots/` folder and update the image paths above.
-
 ---
 
 ## 🧪 Coming Soon
