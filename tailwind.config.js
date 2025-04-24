@@ -8,10 +8,15 @@ module.exports = {
           '0%': { opacity: 0, transform: 'translateY(10px)' },
           '100%': { opacity: 1, transform: 'translateY(0)' },
         },
+        gradientBG: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+      },
       animation: {
         fadeIn: 'fadeIn 0.8s ease-out forwards',
+        gradient: 'gradientBG 8s ease infinite',
       },
-    },
       colors: {
         routraBg: '#F9FAFB',
         routraPanel: '#FFFFFF',
@@ -23,17 +28,7 @@ module.exports = {
       backgroundImage: {
         'animated-gradient': 'linear-gradient(-45deg, #FCA5A5, #FCD34D, #A5F3FC, #C4B5FD)',
       },
-      animation: {
-        gradient: "gradientBG 8s ease infinite",
-      },
-      keyframes: {
-        gradientBG: {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-        },
-      },
     },
   },
   plugins: [],
-}
-
+};

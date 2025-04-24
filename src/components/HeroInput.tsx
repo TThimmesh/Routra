@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const HeroInput = () => {
   const [idea, setIdea] = useState("");
+  const [fadeIn, setFadeIn] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setFadeIn(true), 100);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
-    <section className="text-center space-y-6">
+    <section className={`text-center space-y-6 transition-opacity duration-700 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
+      
       {/* Logo */}
       <div className="flex justify-center animate-fadeIn">
         <img src="/routra_logo_transparent.png" alt="Routra Logo" className="w-58 h-80" />
@@ -12,7 +19,7 @@ const HeroInput = () => {
 
       {/* Headline */}
       <h2 className="text-3xl font-semibold tracking-tight animate-fadeIn delay-100">
-        What does your startup want to be?
+        How do you want to change the world?
       </h2>
 
       {/* Input Box + Button */}
@@ -25,7 +32,7 @@ const HeroInput = () => {
           placeholder="An AI tutor for kids with ADHD..."
         />
         <button
-          className="bg-routraAccent hover:bg-routraAccentBold text-white font-medium px-6 py-3 rounded-lg transition"
+          className="bg-routraAccent hover:bg-routraAccentHover text-white font-medium px-6 py-3 rounded-lg transition transform hover:scale-105 hover:shadow-lg hover:shadow-routraAccent/40"
         >
           Generate
         </button>
