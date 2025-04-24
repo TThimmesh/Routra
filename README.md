@@ -2,7 +2,7 @@
 
 Routra is an AI-powered roadmap generator for startups. Describe your startup idea in natural language, and Routra transforms it into a clean, visual roadmap that evolves with your product. Simple. Smart. Scalable.
 
-![Routra Logo](public/routra_logo_transparent.png)
+![Routra Logo](public/routra_cropped.png)
 
 ---
 
