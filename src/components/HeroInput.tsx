@@ -4,21 +4,28 @@ const HeroInput = () => {
   const [idea, setIdea] = useState("");
 
   return (
-    <section className="text-center space-y-6">
-      <h2 className="text-3xl font-semibold text-white tracking-tight">
-        What is your next big idea?
+    <section className="text-center space-y-1">
+      {/* Logo at the top */}
+      <div className="flex justify-center">
+        <img src="/routra_logo_transparent.png" alt="Routra Logo" className="w-55 h-80" />
+      </div>
+
+      {/* Headline */}
+      <h2 className="text-3xl font-semibold tracking-tight">
+        What does your startup want to be?
       </h2>
 
-      <div className="flex flex-col sm:flex-row items-center gap-4 max-w-xl mx-auto">
+      {/* Input box + button */}
+      <div className="flex flex-col sm:flex-row items-center gap-4 bg-routraPanel p-4 rounded-xl shadow border border-routraBorder">
         <input
           type="text"
           value={idea}
           onChange={(e) => setIdea(e.target.value)}
-          className="w-full p-3 rounded-lg bg-routraCard text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-routraPurple transition"
+          className="w-full bg-transparent text-routraText placeholder-gray-500 p-3 rounded-lg border border-routraBorder focus:outline-none"
           placeholder="An AI tutor for kids with ADHD..."
         />
         <button
-          className="bg-routraPurple hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition"
+          className="bg-routraAccent hover:bg-routraAccentHover text-white font-medium px-6 py-3 rounded-lg transition"
         >
           Generate
         </button>
@@ -28,3 +35,4 @@ const HeroInput = () => {
 };
 
 export default HeroInput;
+
