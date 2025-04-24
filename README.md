@@ -61,3 +61,9 @@ Routra supports a smooth light ↔ dark transition. Your theme preference is sav
 🎨 Responsible for brand identity, UI styling, logo design, and visual direction.
 
 📬 [LinkedIn](https://www.linkedin.com/in/luke-hutchison-737237310/)
+
+### 🎨 Randall Manayao 
+**Role:** Visual Design Assistant  
+🎨 Responsible for working alongside the design team to bring Routra’s visual identity to life through UI elements, brand assets, and layout support.
+
+📬 [LinkedIn](https://www.linkedin.com/in/randall-manayao-b80648311/)
