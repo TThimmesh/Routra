@@ -1,16 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx}", // Scan all components for classes
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        routraPurple: '#6D28D9', // soft purple
-        routraGray: '#1F1F1F',   // dark base
-        routraCard: '#2A2A2A',   // card background
+        routraBg: '#0F0F0F',         // jet black
+        routraPanel: '#1A1A2E',      // deep indigo
+        routraAccent: '#915EFF',     // electric purple
+        routraButton: '#38BDF8',     // sky blue
+        routraText: '#F5F5F5',       // light text
+      },
+      borderRadius: {
+        lg: '0.75rem',
+        xl: '1rem',
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
       },
     },
   },
-  plugins: [], // ← required even if empty
+  plugins: [],
 }
