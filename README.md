@@ -11,8 +11,6 @@ Routra is an AI-powered roadmap generator for startups. Describe your startup id
 - 🧠 AI chatbox that converts startup ideas into actionable roadmaps
 - 📌 Visual roadmap editor with drag-and-drop goals (coming soon)
 - 🎨 Responsive modern UI with light/dark theme toggle
-- 🌌 Dynamic constellation-style animated background
-- 🔁 Placeholder suggestions rotate every few seconds
 - 💡 Built for creators, founders, and product teams
 
 ---
@@ -24,31 +22,6 @@ Routra is an AI-powered roadmap generator for startups. Describe your startup id
 - **Theme Support:** Light/Dark mode toggle with smooth transitions
 - **Graphics:** SVG + Canvas animations
 - **Hosting:** GitHub Pages / Vercel / Netlify
-
----
-
-## ⚙️ Getting Started
-
-### 1. Clone the repo
-
-```bash
-git clone https://github.com/your-username/routra.git
-cd routra
-```
-
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-### 3. Start the dev server
-
-```bash
-npm run dev
-```
-
-App will be running on: `http://localhost:5173` (or as shown in terminal)
 
 ---
 
@@ -77,9 +50,15 @@ Routra supports a smooth light ↔ dark transition. Your theme preference is sav
 
 ---
 
-## 🧑‍💻 Author
+## 👥 Team
 
-**Taylor Thimmesh**  
+### 🧑‍💻 Taylor Thimmesh  
+**Role:** Founder & Lead Developer  
 🌐 [thimmesh.tech](https://thimmesh.tech)  
 📬 [LinkedIn](https://www.linkedin.com/in/taylorthimmesh/)  
-🐦 [@yourhandle](https://twitter.com/wasdtaylor)
+🐦 [@wasdtaylor](https://twitter.com/wasdtaylor)
+
+### 🎨 Luke Hutchison  
+**Role:** Lead Graphic Artist  
+🎨 Responsible for brand identity, UI styling, logo design, and visual direction.
+📬 [LinkedIn](https://www.linkedin.com/in/luke-hutchison-737237310/)
