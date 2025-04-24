@@ -1,0 +1,20 @@
+/* GradientBackground.css */
+.gradient-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -10;
+    background: linear-gradient(-45deg, #ffffff, #FCA5A5, #ffffff, #FEE2E2);
+    background-size: 200% 200%;
+    animation: gradientSoft 8s ease-in-out infinite;
+    opacity: 0.9;
+  }
+  
+  @keyframes gradientSoft {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
