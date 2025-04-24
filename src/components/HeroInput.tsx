@@ -18,7 +18,6 @@ const HeroInput = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  // Change placeholder every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setPlaceholderIndex((prev) => (prev + 1) % suggestions.length);
@@ -27,26 +26,39 @@ const HeroInput = () => {
   }, []);
 
   return (
-    <section className={`text-center space-y-0.1 transition-opacity duration-700 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
-      
-      {/* Logo */}
-    <section className={`text-center transition-opacity duration-700 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
-      <div className="flex justify-center animate-fadeIn mb-[-4px]">
-        <img src="/routra_logo_transparent.png" alt="Routra Logo" className="w-58 h-80" />
-      </div>
-    <h2 className="text-3xl font-bebas tracking-wide animate-fadeIn delay-100 mt-[-6px]">
-    How do you want to change the world?
-    </h2>
-    </section>
-
+    <section
+      className={`text-center transition-opacity duration-300 ${
+        fadeIn ? "opacity-100" : "opacity-0"
+      }`}
+    >
+      {/* Logo + Headline */}
+      <section className="text-center drop-shadow-s">
+        <div className="flex justify-center mb-[-4px]">
+          {/* Light mode logo */}
+          <img
+            src="/routra_logo_transparent.png"
+            alt="Routra Logo Light"
+            className="w-58 h-80 block dark:hidden"
+          />
+          {/* Dark mode logo */}
+          <img
+            src="/routra_white_letters.png"
+            alt="Routra Logo Dark"
+            className="w-58 h-80 hidden dark:block"
+          />
+        </div>
+        <h2 className="text-3xl font-bebas tracking-wide mt-[-6px]">
+          How do you want to change the world?
+        </h2>
+      </section>
 
       {/* Input Box + Button */}
-      <div className="animate-fadeIn delay-200 flex flex-col sm:flex-row items-center gap-4 bg-routraPanel p-4 rounded-xl shadow border border-routraBorder">
+      <div className="mt-4 flex flex-col sm:flex-row items-center gap-4 bg-routraPanel dark:bg-darkPanel p-4 rounded-xl shadow border border-routraBorder dark:border-gray-700 transition-colors duration-150">
         <input
           type="text"
           value={idea}
           onChange={(e) => setIdea(e.target.value)}
-          className="w-full bg-transparent font-bebas tracking-wide text-routraText placeholder-gray-500 p-3 rounded-lg border border-routraBorder focus:outline-none"
+          className="w-full bg-transparent font-bebas tracking-wide text-routraText dark:text-white placeholder-gray-500 dark:placeholder-white/50 p-3 rounded-lg border border-routraBorder dark:border-gray-700 focus:outline-none transition-colors duration-150"
           placeholder={suggestions[placeholderIndex]}
         />
         <button
