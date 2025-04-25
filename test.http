@@ -1,0 +1,6 @@
+POST http://localhost:5000/api/roadmap
+Content-Type: application/json
+
+{
+  "idea": "AI that creates startup roadmaps"
+}
