@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-const HeroInput = () => {
-  const [idea, setIdea] = useState("");
-  const [fadeIn, setFadeIn] = useState(false);
-  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+// Define props for the component
+type HeroInputProps = {
+  setRoadmapData: React.Dispatch<React.SetStateAction<any[]>>;
+};
 
-  const suggestions = [
+const HeroInput: React.FC<HeroInputProps> = ({ setRoadmapData }) => {
+  const [idea, setIdea] = useState<string>("");
+  const [fadeIn, setFadeIn] = useState<boolean>(false);
+  const [placeholderIndex, setPlaceholderIndex] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const suggestions: string[] = [
     "An AI tutor for kids with ADHD...",
     "A no-code app builder for therapists...",
     "Marketing tool for freelancers...",
@@ -24,6 +31,27 @@ const HeroInput = () => {
     }, 4000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleGenerate = async () => {
+    if (!idea) return;
+
+    try {
+      setLoading(true);
+      const response = await axios.post("http://localhost:8080/api/roadmap", {
+        idea: idea
+      });
+
+      if (response.data.roadmap) {
+        setRoadmapData(response.data.roadmap);
+      } else {
+        console.warn("No roadmap returned from backend.");
+      }
+    } catch (error) {
+      console.error("Failed to generate roadmap:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section
@@ -62,9 +90,17 @@ const HeroInput = () => {
           placeholder={suggestions[placeholderIndex]}
         />
         <button
-          className="bg-routraAccent hover:bg-routraAccentHover text-white font-bebas tracking-wide px-6 py-3 rounded-lg transition transform hover:scale-105 hover:shadow-lg hover:shadow-routraAccent/40"
+          onClick={handleGenerate}
+          disabled={loading}
+          className={`${
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-routraAccent hover:bg-routraAccentHover"
+          } text-white font-bebas tracking-wide px-6 py-3 rounded-lg transition transform ${
+            loading ? "" : "hover:scale-105 hover:shadow-lg hover:shadow-routraAccent/40"
+          }`}
         >
-          Generate
+          {loading ? "Generating..." : "Generate"}
         </button>
       </div>
     </section>
