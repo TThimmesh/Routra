@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import HeroInput from "./components/HeroInput";
 import ConstellationBackground from "./components/ConstellationBackground";
 import DarkModeToggle from "./components/DarkModeToggle";
-import RoadmapPreview from "./components/RoadmapPreview"; // ✅ restored list-style preview
 // import RoadmapEditor from "./components/RoadmapEditor"; // for full editing later
 
 function App() {
   const [showHero, setShowHero] = useState(true);
-  const [roadmapData, setRoadmapData] = useState<any[]>([]); // ✅ roadmap state
-  const [isEditing, setIsEditing] = useState(false); // ✅ edit mode toggle
+  const [roadmapData, setRoadmapData] = useState<any[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleThemeSwitch = () => {
     setShowHero(false);
@@ -24,15 +23,22 @@ function App() {
       {/* ✨ Star Constellation Background */}
       <ConstellationBackground />
 
-      {/* Hero input section */}
+      {/* Main content above background */}
       <main className="relative z-10 py-24 px-6 max-w-2xl mx-auto w-full transition-colors duration-150">
         {showHero && <HeroInput setRoadmapData={setRoadmapData} />}
-      </main>
 
-      {/* Roadmap preview (blurred list) or editor */}
-      {roadmapData.length > 0 && !isEditing && (
-        <RoadmapPreview roadmapData={roadmapData} onEdit={() => setIsEditing(true)} />
-      )}
+        {/* Start Editing button — placed closer */}
+        {roadmapData.length > 0 && !isEditing && (
+          <div className="flex justify-center mt-3">
+            <button
+            onClick={() => setIsEditing(true)}
+            className="px-8 py-3 bg-routraAccent hover:bg-routraAccentHover text-white font-bebas tracking-wide text-lg rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
+            Start Editing
+            </button>
+          </div>
+        
+        )}
+      </main>
 
       {/* Editor placeholder */}
       {isEditing && (

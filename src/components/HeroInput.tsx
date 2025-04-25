@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-// Define props for the component
 type HeroInputProps = {
   setRoadmapData: React.Dispatch<React.SetStateAction<any[]>>;
 };
@@ -62,13 +61,11 @@ const HeroInput: React.FC<HeroInputProps> = ({ setRoadmapData }) => {
       {/* Logo + Headline */}
       <section className="text-center drop-shadow-s">
         <div className="flex justify-center mb-[-4px]">
-          {/* Light mode logo */}
           <img
             src="/routra_logo_transparent.png"
             alt="Routra Logo Light"
             className="w-58 h-80 block dark:hidden"
           />
-          {/* Dark mode logo */}
           <img
             src="/routra_white_letters.png"
             alt="Routra Logo Dark"
@@ -93,14 +90,20 @@ const HeroInput: React.FC<HeroInputProps> = ({ setRoadmapData }) => {
           onClick={handleGenerate}
           disabled={loading}
           className={`${
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-routraAccent hover:bg-routraAccentHover"
+            loading ? "bg-gray-400 cursor-not-allowed" : "bg-routraAccent hover:bg-routraAccentHover"
           } text-white font-bebas tracking-wide px-6 py-3 rounded-lg transition transform ${
             loading ? "" : "hover:scale-105 hover:shadow-lg hover:shadow-routraAccent/40"
           }`}
         >
-          {loading ? "Generating..." : "Generate"}
+          {loading ? (
+            <div className="flex gap-1 items-center justify-center">
+              <span className="animate-bounce">•</span>
+              <span className="animate-bounce [animation-delay:0.1s]">•</span>
+              <span className="animate-bounce [animation-delay:0.2s]">•</span>
+            </div>
+          ) : (
+            "Generate"
+          )}
         </button>
       </div>
     </section>
