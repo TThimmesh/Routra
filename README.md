@@ -67,3 +67,9 @@ Routra supports a smooth light ↔ dark transition. Your theme preference is sav
 🎨 Responsible for working alongside the design team to bring Routra’s visual identity to life through UI elements, brand assets, and layout support.
 
 📬 [LinkedIn](https://www.linkedin.com/in/randall-manayao-b80648311/)
+
+### 🎨 Simas Gurskis
+**Role:** Head of Marketing 
+🎨 Responsible for shaping Routra’s brand voice, developing and executing growth strategies, and leading all marketing efforts to drive user acquisition, community engagement, and product visibility across digital channels.
+
+📬 [LinkedIn](https://www.linkedin.com/in/simas-gurskis-b025b1362/)
