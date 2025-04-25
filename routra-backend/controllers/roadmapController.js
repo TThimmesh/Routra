@@ -1,17 +1,17 @@
-// controllers/roadmapController.js
+const { generateRoadmap } = require('../services/aiService');
+
 exports.generateRoadmap = async (req, res) => {
-    console.log('Received POST request with:', req.body); // <--- this is the log
-  
-    const { idea } = req.body;
-  
-    res.json({
-      message: 'Roadmap generated!',
-      input: idea,
-      mockRoadmap: [
-        { step: 'Define MVP', due: 'Week 1' },
-        { step: 'Build landing page', due: 'Week 2' },
-        { step: 'Start beta list', due: 'Week 3' }
-      ]
-    });
-  };
-  
+  const { idea } = req.body;
+
+  if (!idea) {
+    return res.status(400).json({ error: 'Missing startup idea' });
+  }
+
+  const roadmap = await generateRoadmap(idea);
+
+  res.json({
+    message: 'Roadmap generated!',
+    input: idea,
+    roadmap: roadmap
+  });
+};
