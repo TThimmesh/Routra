@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'; // ✅ added
+import { BrowserRouter } from 'react-router-dom'; // ✅ wrap in BrowserRouter
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter> {/* ✅ wrap App with BrowserRouter */}
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>

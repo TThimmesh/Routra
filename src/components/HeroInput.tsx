@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-type HeroInputProps = {
-  setRoadmapData: React.Dispatch<React.SetStateAction<any[]>>;
-};
-
-const HeroInput: React.FC<HeroInputProps> = ({ setRoadmapData }) => {
+const HeroInput: React.FC = () => {
   const [idea, setIdea] = useState<string>("");
   const [fadeIn, setFadeIn] = useState<boolean>(false);
   const [placeholderIndex, setPlaceholderIndex] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const suggestions: string[] = [
     "An AI tutor for kids with ADHD...",
@@ -41,7 +39,12 @@ const HeroInput: React.FC<HeroInputProps> = ({ setRoadmapData }) => {
       });
 
       if (response.data.roadmap) {
-        setRoadmapData(response.data.roadmap);
+        navigate("/editor", {
+          state: {
+            roadmapData: response.data.roadmap,
+            ideaText: idea, // 💡 Pass the idea text too!
+          },
+        });
       } else {
         console.warn("No roadmap returned from backend.");
       }
