@@ -9,7 +9,7 @@ Routra is an AI-powered roadmap generator for startups. Describe your startup id
 ## ✨ Features
 
 - 🧠 AI chatbox that converts startup ideas into actionable roadmaps
-- 📌 Visual roadmap editor with drag-and-drop goals (coming soon)
+- 📌 Visual roadmap editor (MVP) with drag-and-drop phases and color customization
 - 🎨 Responsive modern UI with light/dark theme toggle
 - 💡 Built for creators, founders, and product teams
 
@@ -22,6 +22,7 @@ Routra is an AI-powered roadmap generator for startups. Describe your startup id
 - **Theme Support:** Light/Dark mode toggle with smooth transitions
 - **Graphics:** SVG + Canvas animations
 - **Hosting:** GitHub Pages / Vercel / Netlify
+- **AI Integration:** Hugging Face API / Local Ollama LLM backend
 
 ---
 
@@ -42,9 +43,10 @@ Routra supports a smooth light ↔ dark transition. Your theme preference is sav
 ## 🧪 Coming Soon
 
 - User authentication
-- Save/share roadmaps
-- AI-generated milestones and task breakdowns
-- Export to Notion / Trello / PDF
+- Save/share personal roadmaps
+- AI-generated task breakdowns and milestones
+- Export roadmaps to Notion / Trello / PDF
+- Improved roadmap layout and auto-organizing mind map editor
 
 ---
 
@@ -58,19 +60,17 @@ Routra supports a smooth light ↔ dark transition. Your theme preference is sav
 
 ### 🎨 Luke Hutchison  
 **Role:** Lead Graphic Artist  
-🎨 Responsible for brand identity, UI styling, logo design, and visual direction.
-
+🎨 Responsible for brand identity, UI styling, logo design, and visual direction.  
 📬 [LinkedIn](https://www.linkedin.com/in/luke-hutchison-737237310/)
 
-### 🎨 Randall Manayao 
+### 🎨 Randall Manayao  
 **Role:** Visual Design Assistant  
-🎨 Responsible for working alongside the design team to bring Routra’s visual identity to life through UI elements, brand assets, and layout support.
-
+🎨 Works alongside the design team to bring Routra’s visual identity to life through UI elements, brand assets, and layout support.  
 📬 [LinkedIn](https://www.linkedin.com/in/randall-manayao-b80648311/)
 
-### 🎨 Simas Gurskis
-**Role:** Head of Marketing
- 
-🎨 Responsible for shaping Routra’s brand voice, developing and executing growth strategies, and leading all marketing efforts to drive user acquisition, community engagement, and product visibility across digital channels.
-
+### 📈 Simas Gurskis  
+**Role:** Head of Marketing  
+📈 Responsible for shaping Routra’s brand voice, executing growth strategies, and leading marketing efforts to drive user acquisition, community engagement, and product visibility.  
 📬 [LinkedIn](https://www.linkedin.com/in/simas-gurskis-b025b1362/)
+
+---
