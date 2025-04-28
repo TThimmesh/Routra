@@ -19,7 +19,7 @@ export default function CustomEditableNode({ data, id }: NodeProps) {
   return (
     <div
       onClick={(e) => {
-        e.stopPropagation(); // Let parent handle clicks properly
+        e.stopPropagation();
       }}
       onDoubleClick={(e) => {
         e.stopPropagation();
@@ -32,13 +32,14 @@ export default function CustomEditableNode({ data, id }: NodeProps) {
         fontFamily: "Bebas Neue, sans-serif",
         fontSize: "16px",
         borderRadius: 12,
-        minWidth: 150,         // Allow flexible width
-        maxWidth: 300,         // Don't let it grow too huge
-        background: data.background || "#ffffff",
+        minWidth: 150,
+        maxWidth: 300,
+        background: data.background || "#ffffff",  // always white node background
         border: "2px solid #6366f1",
-        wordWrap: "break-word",     // Break long words
-        overflowWrap: "break-word", // Break overflow text
-        whiteSpace: "pre-wrap",     // Allow line breaks
+        color: "#111111", // always black text
+        wordWrap: "break-word",
+        overflowWrap: "break-word",
+        whiteSpace: "pre-wrap",
         position: "relative",
       }}
     >
@@ -67,6 +68,7 @@ export default function CustomEditableNode({ data, id }: NodeProps) {
             background: "transparent",
             border: "none",
             outline: "none",
+            color: "#111111", // always black text in edit mode too
             whiteSpace: "pre-wrap",
           }}
         />
