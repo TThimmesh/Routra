@@ -18,7 +18,13 @@ export default function CustomEditableNode({ data, id }: NodeProps) {
 
   return (
     <div
-      onDoubleClick={() => setEditing(true)}
+      onClick={(e) => {
+        e.stopPropagation(); // Let parent handle clicks properly
+      }}
+      onDoubleClick={(e) => {
+        e.stopPropagation();
+        setEditing(true);
+      }}
       style={{
         padding: 10,
         cursor: "pointer",
@@ -26,34 +32,49 @@ export default function CustomEditableNode({ data, id }: NodeProps) {
         fontFamily: "Bebas Neue, sans-serif",
         fontSize: "16px",
         borderRadius: 12,
-        minWidth: 150,
+        minWidth: 150,         // Allow flexible width
+        maxWidth: 300,         // Don't let it grow too huge
         background: data.background || "#ffffff",
         border: "2px solid #6366f1",
+        wordWrap: "break-word",     // Break long words
+        overflowWrap: "break-word", // Break overflow text
+        whiteSpace: "pre-wrap",     // Allow line breaks
         position: "relative",
       }}
     >
-      {/* Target handle (where connections come into this node) */}
+      {/* Target handle (incoming connections) */}
       <Handle
         type="target"
         position={Position.Top}
         style={{ background: "#555", width: 10, height: 10 }}
         id="target"
       />
-      
-      {/* Editable label or input */}
+
+      {/* Editable text or textarea */}
       {editing ? (
-        <input
+        <textarea
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onBlur={handleBlur}
           autoFocus
-          style={{ width: "90%", fontSize: "16px", textAlign: "center" }}
+          rows={1}
+          style={{
+            width: "100%",
+            fontSize: "16px",
+            textAlign: "center",
+            resize: "none",
+            overflow: "hidden",
+            background: "transparent",
+            border: "none",
+            outline: "none",
+            whiteSpace: "pre-wrap",
+          }}
         />
       ) : (
         <div>{value}</div>
       )}
 
-      {/* Source handle (where connections start from this node) */}
+      {/* Source handle (outgoing connections) */}
       <Handle
         type="source"
         position={Position.Bottom}
