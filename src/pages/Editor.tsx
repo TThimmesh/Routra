@@ -11,19 +11,27 @@ import ReactFlow, {
   useEdgesState,
   useNodesState,
   ReactFlowProvider,
-  useReactFlow,
   BackgroundVariant,
-  NodeMouseHandler
+  NodeTypes,
+  NodeMouseHandler,
+  ConnectionLineType,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { convertRoadmapJsonToFlow } from "../utils/convertRoadmapJsonToFlow";
 import ColorPicker from "../components/ColorPicker";
+import CustomEditableNode from "../components/CustomEditableNode";
+import { useReactFlow } from "reactflow";
+
+const nodeTypes: NodeTypes = {
+  editableNode: CustomEditableNode,
+};
 
 const EditorInner = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [colorPickerPos, setColorPickerPos] = useState<{ x: number; y: number } | null>(null);
+  const [colorMode, setColorMode] = useState(false);
 
   const location = useLocation();
   const { fitView } = useReactFlow();
@@ -42,7 +50,12 @@ const EditorInner = () => {
         { roadmap: roadmapFromAI },
         ideaText
       );
-      setNodes(loadedNodes);
+      setNodes(
+        loadedNodes.map((node) => ({
+          ...node,
+          type: "editableNode",
+        }))
+      );
       setEdges(loadedEdges);
 
       setTimeout(() => {
@@ -51,19 +64,31 @@ const EditorInner = () => {
     }
   }, [roadmapFromAI, ideaText, fitView]);
 
-  const handleDoubleClick: NodeMouseHandler = (event, node) => {
-    event.preventDefault(); // prevent weird browser behavior sometimes
+  // ✅ Toggle color mode on pressing 'C'
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === 'c') {
+        setColorMode(prev => !prev);
+      }
+    };
 
-    setSelectedNodeId(null);
-    setColorPickerPos(null);
+    document.addEventListener('keydown', handleKeyDown);
 
-    setTimeout(() => {
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const handleNodeClick: NodeMouseHandler = (event, node) => {
+    event.preventDefault();
+
+    if (colorMode) {
       setSelectedNodeId(node.id);
       setColorPickerPos({
         x: event.clientX,
-        y: event.clientY + 10, // small offset so picker is BELOW mouse
+        y: event.clientY + 10,
       });
-    }, 0);
+    }
   };
 
   const handleColorSelect = (color: string) => {
@@ -75,8 +100,8 @@ const EditorInner = () => {
               style: {
                 ...node.style,
                 background: color,
-                border: `2px solid ${color}`
-              }
+                border: `2px solid ${color}`,
+              },
             }
           : node
       )
@@ -90,12 +115,9 @@ const EditorInner = () => {
 
     const newNode: Node = {
       id: `node-${nodes.length + 1}`,
-      type: "default",
+      type: "editableNode",
       data: { label: `New Phase ${nodes.length + 1}` },
-      position: {
-        x: maxX + 300,
-        y: 200,
-      },
+      position: { x: maxX + 300, y: 200 },
       style: {
         background: "#ffffff",
         border: "2px solid #6366f1",
@@ -105,64 +127,92 @@ const EditorInner = () => {
         fontFamily: "Bebas Neue, sans-serif",
         textAlign: "center",
         width: 180,
-        height: 80,
+        height: 100,
       },
-      draggable: true,
     };
-
     setNodes((nds) => [...nds, newNode]);
   };
 
   return (
-    <div className="relative w-full h-screen bg-routraBg dark:bg-darkBg transition-all duration-500">
-
-      {/* ➕ Add Phase Button */}
+    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
+      {/* Floating Add Node Button */}
       <button
         onClick={handleAddNode}
-        className="absolute top-4 left-4 z-50 px-4 py-2 bg-routraAccent hover:bg-routraAccentHover text-white font-bebas rounded-lg shadow-md transition-all"
+        style={{
+          position: "absolute",
+          top: 10,
+          left: 10,
+          zIndex: 10,
+          width: 48,
+          height: 48,
+          borderRadius: "50%",
+          backgroundColor: "#6366f1",
+          color: "white",
+          fontSize: "32px",
+          fontWeight: "bold",
+          border: "none",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          paddingBottom: "2px",
+          lineHeight: 0.9,
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
+          transition: "all 0.2s ease",
+        }}
+        onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+        onMouseOut={(e) => e.currentTarget.style.transform = "scale(1.0)"}
       >
-        + Add Phase
+        +
       </button>
 
+      {/* Color Mode Badge */}
+      {colorMode && (
+        <div style={{
+          position: 'absolute',
+          top: 70,
+          left: 10,
+          backgroundColor: '#6366f1',
+          color: 'white',
+          padding: '4px 8px',
+          borderRadius: '8px',
+          fontSize: '14px',
+          fontWeight: 'bold',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+          zIndex: 10,
+        }}>
+          🎨 Color Mode Active
+        </div>
+      )}
+
+      {/* ReactFlow Canvas */}
       <ReactFlow
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onNodeDoubleClick={handleDoubleClick}
+        nodeTypes={nodeTypes}
+        onNodeClick={handleNodeClick}
+        connectionLineType={ConnectionLineType.Bezier}
         fitView
-        fitViewOptions={{ padding: 0.5 }}
-        proOptions={{ hideAttribution: true }}
-        snapToGrid
-        snapGrid={[20, 20]}
-        elementsSelectable
       >
-        <Background
-          variant={BackgroundVariant.Dots}
-          gap={20}
-          size={1}
-          color="#fecaca"
-        />
-        <Controls showInteractive={true} />
-        <MiniMap
-          nodeColor={(n) => (n.type === "input" ? "#f87171" : "#6366f1")}
-          maskColor="rgba(0,0,0,0.15)"
-          nodeStrokeWidth={3}
-          zoomable
-          pannable
-        />
-
-        {/* 🎨 Color Picker Floating */}
-        {colorPickerPos && (
-          <div
-            className="absolute z-50"
-            style={{ left: colorPickerPos.x, top: colorPickerPos.y }}
-          >
-            <ColorPicker onSelectColor={handleColorSelect} />
-          </div>
-        )}
+        <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+        <Controls />
+        <MiniMap />
       </ReactFlow>
+
+      {/* Color Picker */}
+      {colorPickerPos && selectedNodeId && (
+        <ColorPicker
+          position={colorPickerPos}
+          onSelect={handleColorSelect}
+          onClose={() => {
+            setSelectedNodeId(null);
+            setColorPickerPos(null);
+          }}
+        />
+      )}
     </div>
   );
 };

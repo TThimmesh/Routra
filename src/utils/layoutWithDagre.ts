@@ -8,7 +8,7 @@ const nodeHeight = 80;
 
 /**
  * Auto-layout the nodes and edges using Dagre for clean flow.
- * 
+ *
  * @param nodes List of React Flow nodes
  * @param edges List of React Flow edges
  * @param direction Flow direction: "LR" (left-right) or "TB" (top-bottom)
@@ -33,7 +33,9 @@ export const layoutWithDagre = (
 
   // Add all nodes to Dagre
   nodes.forEach((node) => {
-    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
+    const width = (node.style?.width as number) || nodeWidth;
+    const height = (node.style?.height as number) || nodeHeight;
+    dagreGraph.setNode(node.id, { width, height });
   });
 
   // Add all edges to Dagre
@@ -47,12 +49,14 @@ export const layoutWithDagre = (
   // Update node positions based on Dagre output
   const laidOutNodes = nodes.map((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
+    const width = (node.style?.width as number) || nodeWidth;
+    const height = (node.style?.height as number) || nodeHeight;
 
     return {
       ...node,
       position: {
-        x: nodeWithPosition.x - nodeWidth / 2,  // center the node
-        y: nodeWithPosition.y - nodeHeight / 2, // center the node
+        x: nodeWithPosition.x - width / 2,   // Center horizontally
+        y: nodeWithPosition.y - height / 2,  // Center vertically
       },
       sourcePosition: direction === "LR" ? Position.Right : Position.Bottom,
       targetPosition: direction === "LR" ? Position.Left : Position.Top,
