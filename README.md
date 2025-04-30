@@ -15,6 +15,12 @@ Routra is an AI-powered roadmap generator for startups. Describe your startup id
 
 ---
 
+## 📍 Project Roadmap
+
+You can view the full roadmap [here](./ROADMAP.md).
+
+---
+
 ## 🛠 Tech Stack
 
 - **Frontend:** React + Vite + TypeScript
