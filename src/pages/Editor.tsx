@@ -32,11 +32,14 @@ const EditorInner = () => {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [colorPickerPos, setColorPickerPos] = useState<{ x: number; y: number } | null>(null);
   const [colorMode, setColorMode] = useState(false);
+  const [isDemo, setIsDemo] = useState(false);
 
   const location = useLocation();
   const { fitView } = useReactFlow();
 
   const roadmapFromAI = location.state?.roadmapData;
+  const demoNodes = location.state?.nodes;
+  const demoEdges = location.state?.edges;
   const ideaText = location.state?.ideaText || "Startup Idea";
 
   const onConnect = useCallback(
@@ -45,7 +48,20 @@ const EditorInner = () => {
   );
 
   useEffect(() => {
-    if (roadmapFromAI) {
+    if (demoNodes && demoEdges) {
+      setNodes(
+        demoNodes.map((node: Node) => ({
+          ...node,
+          type: "editableNode",
+        }))
+      );
+      setEdges(demoEdges);
+      setIsDemo(true);
+
+      setTimeout(() => {
+        fitView({ padding: 0.3, duration: 800 });
+      }, 300);
+    } else if (roadmapFromAI) {
       const { nodes: loadedNodes, edges: loadedEdges } = convertRoadmapJsonToFlow(
         { roadmap: roadmapFromAI },
         ideaText
@@ -62,9 +78,8 @@ const EditorInner = () => {
         fitView({ padding: 0.3, duration: 800 });
       }, 300);
     }
-  }, [roadmapFromAI, ideaText, fitView]);
+  }, [demoNodes, demoEdges, roadmapFromAI, ideaText, fitView]);
 
-  // ✅ Toggle color mode on pressing 'C'
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key.toLowerCase() === 'c') {
@@ -73,10 +88,7 @@ const EditorInner = () => {
     };
 
     document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const handleNodeClick: NodeMouseHandler = (event, node) => {
@@ -135,6 +147,12 @@ const EditorInner = () => {
 
   return (
     <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
+      {isDemo && (
+        <div className="bg-yellow-100 text-yellow-900 text-center py-2 px-4 text-sm font-medium">
+          ⚠️ You are viewing a demo roadmap. Some features may be limited.
+        </div>
+      )}
+
       {/* Floating Add Node Button */}
       <button
         onClick={handleAddNode}
@@ -160,13 +178,12 @@ const EditorInner = () => {
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
           transition: "all 0.2s ease",
         }}
-        onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-        onMouseOut={(e) => e.currentTarget.style.transform = "scale(1.0)"}
+        onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
+        onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1.0)")}
       >
         +
       </button>
 
-      {/* Color Mode Badge */}
       {colorMode && (
         <div style={{
           position: 'absolute',
@@ -185,7 +202,6 @@ const EditorInner = () => {
         </div>
       )}
 
-      {/* ReactFlow Canvas */}
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -202,7 +218,6 @@ const EditorInner = () => {
         <MiniMap />
       </ReactFlow>
 
-      {/* Color Picker */}
       {colorPickerPos && selectedNodeId && (
         <ColorPicker
           position={colorPickerPos}

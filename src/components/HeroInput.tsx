@@ -1,57 +1,33 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { demoRoadmaps } from "../utils/demoRoadmaps";
+import { convertRoadmapJsonToFlow } from "../utils/convertRoadmapJsonToFlow";
 
 const HeroInput: React.FC = () => {
-  const [idea, setIdea] = useState<string>("");
+  const [selectedPrompt, setSelectedPrompt] = useState<string>("");
   const [fadeIn, setFadeIn] = useState<boolean>(false);
-  const [placeholderIndex, setPlaceholderIndex] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-
-  const suggestions: string[] = [
-    "An AI tutor for kids with ADHD...",
-    "A no-code app builder for therapists...",
-    "Marketing tool for freelancers...",
-    "Startup accelerator for remote teams...",
-    "Mental health support via text..."
-  ];
 
   useEffect(() => {
     const timeout = setTimeout(() => setFadeIn(true), 100);
     return () => clearTimeout(timeout);
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderIndex((prev) => (prev + 1) % suggestions.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+  const handleGenerate = () => {
+    if (!selectedPrompt) return;
 
-  const handleGenerate = async () => {
-    if (!idea) return;
-
-    try {
-      setLoading(true);
-      const response = await axios.post("http://localhost:8080/api/roadmap", {
-        idea: idea
+    const demo = demoRoadmaps[selectedPrompt];
+    if (demo) {
+      const { nodes, edges } = convertRoadmapJsonToFlow(demo, selectedPrompt);
+      navigate("/editor", {
+        state: {
+          nodes,
+          edges,
+          ideaText: selectedPrompt,
+          isDemo: true,
+        },
       });
-
-      if (response.data.roadmap) {
-        navigate("/editor", {
-          state: {
-            roadmapData: response.data.roadmap,
-            ideaText: idea, // 💡 Pass the idea text too!
-          },
-        });
-      } else {
-        console.warn("No roadmap returned from backend.");
-      }
-    } catch (error) {
-      console.error("Failed to generate roadmap:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -76,26 +52,34 @@ const HeroInput: React.FC = () => {
           />
         </div>
         <h2 className="text-3xl font-bebas tracking-wide mt-[-6px]">
-          How do you want to change the world?
+          Test Drive a Startup Idea
         </h2>
       </section>
 
-      {/* Input Box + Button */}
+      {/* Dropdown + Button */}
       <div className="mt-4 flex flex-col sm:flex-row items-center gap-4 bg-routraPanel dark:bg-darkPanel p-4 rounded-xl shadow border border-routraBorder dark:border-gray-700 transition-colors duration-150">
-        <input
-          type="text"
-          value={idea}
-          onChange={(e) => setIdea(e.target.value)}
-          className="w-full bg-transparent font-bebas tracking-wide text-routraText dark:text-white placeholder-gray-500 dark:placeholder-white/50 p-3 rounded-lg border border-routraBorder dark:border-gray-700 focus:outline-none transition-colors duration-150"
-          placeholder={suggestions[placeholderIndex]}
-        />
+        <select
+          value={selectedPrompt}
+          onChange={(e) => setSelectedPrompt(e.target.value)}
+          className="w-full bg-routraPanel dark:bg-darkPanel font-bebas tracking-wide text-lg text-routraText dark:text-white p-3 rounded-lg border-2 border-routraAccent focus:outline-none focus:ring-2 focus:ring-routraAccent transition-colors duration-200 shadow-sm"
+        >
+          <option value="">Select a demo startup idea...</option>
+          {Object.keys(demoRoadmaps).map((prompt) => (
+            <option key={prompt} value={prompt} className="text-black dark:text-white">
+              {prompt}
+            </option>
+          ))}
+        </select>
+
         <button
           onClick={handleGenerate}
-          disabled={loading}
+          disabled={loading || !selectedPrompt}
           className={`${
-            loading ? "bg-gray-400 cursor-not-allowed" : "bg-routraAccent hover:bg-routraAccentHover"
-          } text-white font-bebas tracking-wide px-6 py-3 rounded-lg transition transform ${
-            loading ? "" : "hover:scale-105 hover:shadow-lg hover:shadow-routraAccent/40"
+            loading || !selectedPrompt
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-routraAccent hover:bg-routraAccentHover"
+          } text-white font-bebas px-6 py-3 rounded-lg transition transform ${
+            !loading ? "hover:scale-105 hover:shadow-lg hover:shadow-routraAccent/40" : ""
           }`}
         >
           {loading ? (
