@@ -28,6 +28,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  
+  "engines": {
+  "node": "20.18.0"
+  }, 
+
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -47,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@gradin/tailwindcss-scrollbar": "^3.0.1",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
     "tailwind-scrollbar": "^4.0.2",
