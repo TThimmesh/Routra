@@ -1,20 +1,20 @@
 // services/aiService.js
-const axios = require('axios');
+const { OpenAI } = require("openai");
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 exports.generateRoadmap = async (idea) => {
   const prompt = `Create a detailed startup roadmap based on the following idea:\n\n"${idea}"\n\nBreak the roadmap into clear phases. For each phase, list steps (numbered like 1., 2., etc.) and include bullet point substeps if needed. Format clearly and use consistent structure.`;
 
   try {
-    const response = await axios.post(
-      'http://localhost:11434/api/generate',
-      {
-        model: 'llama3.2',
-        prompt: prompt,
-        stream: false
-      }
-    );
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: prompt }],
+    });
 
-    const output = response.data.response;
+    const output = completion.choices[0].message.content;
     console.log("🔍 RAW AI RESPONSE:\n", output); // Debug: see what the AI generated
 
     const formatRoadmap = (text) => {
@@ -64,7 +64,7 @@ exports.generateRoadmap = async (idea) => {
     return formatRoadmap(output);
 
   } catch (error) {
-    console.error('❌ Ollama generation error:', error.response?.data || error.message);
-    return 'Local AI generation failed.';
+    console.error('❌ OpenAI generation error:', error.response?.data || error.message);
+    return 'OpenAI generation failed.';
   }
 };
